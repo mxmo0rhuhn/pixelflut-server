@@ -1,0 +1,104 @@
+---
+- name: Install Debs
+  include_tasks: deb.yml
+  loop:
+    - xorg
+    - lightdm
+    - ufw
+    - git
+    - rustc
+    - build-essential
+    - libfreetype6-dev
+
+- name: Disallow SSH with pwd
+  become: True
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^PasswordAuthentication.*"
+    line: "PasswordAuthentication no"
+    state: "present"
+    insertbefore: EOF
+  notify:
+   - Restart ssh
+
+- name: Enable ssh on startup
+  become: True
+  systemd:
+    name: "ssh"
+    enabled: True
+
+- name: Add pixelflut user
+  become: True
+  user:
+    name: "{{ pixelflut_user }}"
+    create_home: yes
+    home: "{{ pixelflut_user_home }}"
+    append: yes
+
+- name: Download pixelflut
+  become: True
+  become_user: "{{ pixelflut_user }}"
+  git:
+    repo: "{{ pixelflut_repo }}"
+    dest: "{{ pixelflut_dir }}"
+  register: pixelflut_checkout
+
+- name: Build Pixelflut on change
+  become: True
+  become_user: "{{ pixelflut_user }}"
+  command: "{{ pixelflut_build_command }}"
+  args:
+    chdir: "{{ pixelflut_dir }}"
+  when: pixelflut_checkout|changed
+  notify:
+   - Restart lightdm
+
+- name: Enable automatic login for user
+  become: True
+  lineinfile:
+    dest: "/etc/lightdm/lightdm.conf"
+    regexp: "^{{ item.pattern }}.*"
+    line: "{{ item.pattern}}={{ item.value }}"
+    state: "present"
+    insertbefore: EOF
+  loop:
+    - { pattern: "autologin-user", value: "pi" }
+    - { pattern: "autologin-user-timeout", value: "0" }
+  notify:
+   - Restart lightdm
+
+- name: "Enable auto start for Pixelflut"
+  become: True
+  template:
+    src: "xsession.j2"
+    dest: "{{ pixelflut_user_home}}/.xsession"
+    owner: "{{ pixelflut_user }}"
+    group: "{{ pixelflut_user }}"
+    mode: 0644
+  notify:
+   - Restart lightdm
+
+- name: Open relevant ports
+  become: True
+  ufw:
+    proto=tcp
+    rule={{ item.policy }}
+    port={{ item.port }}
+  with_items:
+    - { policy: 'allow', port: '22' }
+    - { policy: 'allow', port: pixelflut_port }
+  notify:
+   - Restart ufw
+
+- name: Disable ufw logging
+  become: True
+  ufw:
+    logging=off
+
+- name: Enable ufw
+  become: True
+  ufw:
+    proto: any
+    state: enabled
+    policy: deny
+    direction: incoming

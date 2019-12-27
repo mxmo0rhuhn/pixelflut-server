@@ -1,0 +1,5 @@
+---
+pixelflut_port: 1337
+pixelflut_user: pixelflut
+pixelflut_user_home: "/home/{{ pixelflut_user }}"
+pixelflut_dir: "{{ pixelflut_user_home }}/pixelflut"

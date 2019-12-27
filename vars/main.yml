@@ -1,0 +1,5 @@
+---
+# vars file for pixelflut
+pixelflut_repo: https://github.com/timvisee/pixelpwnr-server.git
+pixelflut_build_command: "cargo install -f"
+pixelflut_run_command: "pixelpwnr-server --help"
