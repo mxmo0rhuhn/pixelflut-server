@@ -1,14 +1,19 @@
 ---
 - name: Install Debs
-  include_tasks: deb.yml
-  loop:
-    - xorg
-    - lightdm
-    - ufw
-    - git
-    - rustc
-    - build-essential
-    - libfreetype6-dev
+  become: True
+  apt:
+    pkg:
+      - xorg
+      - htop
+      - nload
+      - lightdm
+      - ufw
+      - git
+      - rustc
+      - build-essential
+      - libfreetype6-dev
+    state: present
+    update_cache: yes
 
 - name: Disallow SSH with pwd
   become: True
@@ -40,6 +45,7 @@
   become_user: "{{ pixelflut_user }}"
   git:
     repo: "{{ pixelflut_repo }}"
+    version: "{{ pixelflut_commit }}"
     dest: "{{ pixelflut_dir }}"
   register: pixelflut_checkout
 
@@ -49,7 +55,7 @@
   command: "{{ pixelflut_build_command }}"
   args:
     chdir: "{{ pixelflut_dir }}"
-  when: pixelflut_checkout|changed
+  when: pixelflut_checkout is changed
   notify:
    - Restart lightdm
 
@@ -62,7 +68,7 @@
     state: "present"
     insertbefore: EOF
   loop:
-    - { pattern: "autologin-user", value: "pi" }
+    - { pattern: "autologin-user", value: "{{ pixelflut_user }}" }
     - { pattern: "autologin-user-timeout", value: "0" }
   notify:
    - Restart lightdm
@@ -86,7 +92,7 @@
     port={{ item.port }}
   with_items:
     - { policy: 'allow', port: '22' }
-    - { policy: 'allow', port: pixelflut_port }
+    - { policy: 'allow', port: "{{ pixelflut_port }}" }
   notify:
    - Restart ufw
 

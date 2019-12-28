@@ -1,6 +1,6 @@
 # Pixelflut
 
-Small Ansible role to configure a Pixelflut server on a Debian 10 based Server.
+Small Ansible role to configure a Pixelflut ([the pixelpwnr server implementation](https://github.com/timvisee/pixelpwnr-server))server on a Debian 10 based system.
 
 ## Requirements
 

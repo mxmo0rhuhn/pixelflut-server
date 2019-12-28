@@ -1,6 +1,6 @@
 galaxy_info:
   author: Max Schrimpf
-  description: your description
+  description: An Ansible role for pixelflut. Pixelflut is a very simple (and inefficient) ASCII based network protocol to draw pixels on a screen. You can write a basic client in a single line of shell code if you want, but you only get to change a single pixel at a time. If you want to get rectangles, lines, text or images on the screen you have to implement that functionality yourself. That is part of the game.
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
