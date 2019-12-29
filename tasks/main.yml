@@ -11,6 +11,7 @@
       - lightdm
       - ufw
       - git
+      - graphicsmagick-imagemagick-compat
     state: present
     update_cache: yes
 

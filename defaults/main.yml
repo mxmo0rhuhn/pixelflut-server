@@ -10,3 +10,7 @@ pixelflut_x_location: 0
 pixelflut_height: 1080
 pixelflut_y_location: 0
 pixelflut_description: "Welcome to Pixelflut"
+pixelflut_take_screenshots: True
+pixelflut_screenshots_folder: "{{ pixelflut_user_home }}/screenshots"
+pixelflut_screenshots_delay_seconds: 30
+pixelflut_minimum_free_memory_mb: 100

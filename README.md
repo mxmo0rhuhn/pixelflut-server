@@ -21,6 +21,10 @@ This assumes a server with a Debian 10 OS and the possibility for the user to lo
  - `pixelflut_height`: The height of the canvas on which the Pixelflut is drawn. This should align with the size of your monitor or beamer and the take the y-location into consideration. Default: 1080
  - `pixelflut_y_location`: The y location of the Pixelflut window on the screen. Default: 0 which means that it is on top of the screen with no offset. A value higher than 0 moves the location of the window down the screen.
  - `pixelflut_description`: A text that can be displayed. Default: "Welcome to Pixelflut"
+ - `pixelflut_take_screenshots`: A boolean that controls rather screenshots of the pixelflut shall be taken or not. Default: True
+ - `pixelflut_screenshots_folder`: The folder that the screenshots would be placed in (if screenshots are active). Default: 'screenshots' folder in the home directory of the 'pixelflut_user'.
+ - `pixelflut_screenshots_delay_seconds`: The interval for taking screenshots (in seconds). Default: 30
+ - `pixelflut_minimum_free_memory_mb`: The minimum of free memory on the filesystem that hosts the pixelflut_screenshots_folder before pausing the screenshot creation. Value is in Megabyte. Default 100.
 
 ## Example Playbook
 

@@ -11,4 +11,19 @@ export PIXELFLUT_WINDOW=$(xdotool search --name shoreline)
 # xdotool windowsize $PIXELFLUT_WINDOW {{ pixelflut_width }} {{ pixelflut_height }}
 xdotool windowmove $PIXELFLUT_WINDOW {{ pixelflut_x_location }} {{ pixelflut_y_location }}
 
+{{ if pixelflut_take_screenshots -}}
+# Just put an super easy way to take screenshots ... could be done much more pretty
 
+SCREENSHOT_FOLDER={{ if pixelflut_screenshots_folder -}}
+
+mkdir -p $SCREENSHOT_FOLDER
+
+while [[ $(df -m $SCREENSHOT_FOLDER | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $4 }') -gt {{ pixelflut_minimum_free_memory_mb }} ]]; do
+
+        ID=$(date +%Y-%m-%d_%H-%M-%S)
+        NAME=$SCREENSHOT_FOLDER/screenshot_${ID}.png
+        import -window root $NAME
+
+        sleep {{ if pixelflut_screenshots_delay_seconds -}}s
+done
+{{- endif -}}
