@@ -10,5 +10,3 @@ pixelflut_x_location: 0
 pixelflut_height: 1080
 pixelflut_y_location: 0
 pixelflut_description: "Welcome to Pixelflut"
-pixelflut_user_home: "/home/{{ pixelflut_user }}"
-pixelflut_dir: "{{ pixelflut_user_home }}/pixelflut"
