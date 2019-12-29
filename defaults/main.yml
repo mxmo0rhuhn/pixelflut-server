@@ -1,5 +1,14 @@
 ---
 pixelflut_port: 1337
 pixelflut_user: pixelflut
+# Random password that is needed to allow auto-login. To create such a password:
+# https://docs.ansible.com/ansible/latest/reference_appendices/faq.html#how-do-i-generate-encrypted-passwords-for-the-user-module
+pixelflut_user_pwd: "$6$yRFNhqFa$mprKptfnXFYyYmYsN/EiE4N6PeFV0huPPDQugzixB0gBumWcjOHL6pftaUx2PXeaNU8Z3dmq4XrVn4LjQ10sV."
+pixelflut_bg_image:
+pixelflut_width: 1920
+pixelflut_x_location: 0
+pixelflut_height: 1080
+pixelflut_y_location: 0
+pixelflut_description: "Welcome to Pixelflut"
 pixelflut_user_home: "/home/{{ pixelflut_user }}"
 pixelflut_dir: "{{ pixelflut_user_home }}/pixelflut"

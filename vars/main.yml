@@ -1,7 +1,14 @@
 ---
 # vars file for pixelflut
-pixelflut_repo: https://github.com/timvisee/pixelpwnr-server.git
-pixelflut_commit: "2f30109671e445c2412dc64cdf18e91b47d409ff"
-pixelflut_build_command: "cargo install -f"
-pixelflut_bin: "{{ pixelflut_dir }}/target/release/pixelpwnr-server"
-pixelflut_run_command: "{{ pixelflut_bin }} --fullscreen --bind 0.0.0.0:{{ pixelflut_port }}"
+pixelflut_repo: https://github.com/TobleMiner/shoreline.git
+pixelflut_dependencies:
+  - build-essential
+  - libsdl2-dev
+  - libpthread-stubs0-dev
+  - libvncserver-dev
+  - libnuma-dev
+  - libfreetype6-dev
+pixelflut_commit: "4a238b33e8dcc0ffc183cb25ec00ac7532aa9a5f"
+pixelflut_build_command: "make"
+pixelflut_bin: "{{ pixelflut_dir }}/shoreline"
+pixelflut_run_command: "{{ pixelflut_bin }} -f sdl -p {{ pixelflut_port }} -w {{ pixelflut_width }} -h {{ pixelflut_height }} -d '{{ pixelflut_description }}'"

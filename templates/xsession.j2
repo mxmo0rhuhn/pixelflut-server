@@ -1,4 +1,10 @@
 xset dpms 0 0 0
 xset s off
 
+{% if pixelflut_bg_image is defined and pixelflut_bg_image %}
+feh -xZF {{ pixelflut_bg_image }} &
+{% endif %}
+
+{{ pixelflut_user_home }}/relocate_pixelflut.sh
+
 {{ pixelflut_run_command }}

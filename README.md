@@ -15,6 +15,10 @@ A description of the settable variables for this role should go here, including 
 This is an example of how to use the role:
 ```
     - hosts: server
+      vars:
+        pixelflut_y_location: 150
+        pixelflut_height: 650
+        pixelflut_bg_image: 36c3.png
       roles:
          - { role: pixelflut }
 ```

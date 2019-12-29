@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# We need to relocate the Pixelflut window to its final destination since shoreline does not really
+# want to be forked into background
+
+# give the pixelflut time to start
+sleep 15s
+
+export PIXELFLUT_WINDOW=$(xdotool search --name shoreline)
+
+# xdotool windowsize $PIXELFLUT_WINDOW {{ pixelflut_width }} {{ pixelflut_height }}
+xdotool windowmove $PIXELFLUT_WINDOW {{ pixelflut_x_location }} {{ pixelflut_y_location }}
+
+
